@@ -1,7 +1,7 @@
 import numpy as np
 
 from conditions.models import BaseCondition, Condition
-from django.contrib.gis.gdal import CoordTransform, SpatialReference
+from django.contrib.gis.gdal import CoordTransform, GDALRaster, SpatialReference
 from django.contrib.gis.geos import GEOSGeometry
 from django.db import connection
 from plan.models import ConditionScores, Plan
@@ -42,23 +42,27 @@ def _compute_score_from_raster(geo: GEOSGeometry, raster_name: str) -> float:
         return cursor_output[0]
 
 
-def fetch_or_compute_mean_condition_scores(plan: Plan) -> dict[str, float]:
-    reg = plan.region_name.removeprefix('RegionName.').lower()
-    geo = plan.geometry
-
-    if geo is None:
-        raise AssertionError("plan is missing geometry")
+def _transform_geo_for_raster(geo: GEOSGeometry) -> GEOSGeometry:
     if geo.srid != settings.CRS_FOR_RASTERS:
         geo.transform(
             CoordTransform(SpatialReference(geo.srid),
                            SpatialReference(settings.CRS_9822_PROJ4)))
         geo.srid = settings.CRS_FOR_RASTERS
 
+
+def fetch_or_compute_mean_condition_scores(plan: Plan) -> dict[str, float]:
+    reg = plan.region_name.removeprefix('RegionName.').lower()
+    geo = plan.geometry
+
+    if geo is None:
+        raise AssertionError("plan is missing geometry")
+    _transform_geo_for_raster(geo)
+
     ids_to_condition_names = {
         c.pk: c.condition_name
         for c in BaseCondition.objects.filter(region_name=reg).all()}
     if len(ids_to_condition_names.keys()) == 0:
-        raise AssertionError("no conditions exist for region, %s"%reg)
+        raise AssertionError("no conditions exist for region, %s" % reg)
 
     conditions = Condition.objects.filter(
         condition_dataset_id__in=ids_to_condition_names.keys()).filter(
@@ -80,3 +84,22 @@ def fetch_or_compute_mean_condition_scores(plan: Plan) -> dict[str, float]:
             plan=plan, condition=condition, mean_score=score)
 
     return condition_scores
+
+
+def get_clipped_raster(geo: GEOSGeometry, raster_name: str) -> GDALRaster:
+    _transform_geo_for_raster(geo)
+
+    with connection.cursor() as cursor:
+        cursor.callproc(
+            'get_clipped_raster',
+            (RASTER_TABLE, RASTER_SCHEMA, raster_name, RASTER_NAME_COLUMN,
+             RASTER_COLUMN, geo.ewkb))
+        cursor_output = list(cursor.fetchone())
+        if (cursor_output is None or len(cursor_output) == 0
+                or cursor_output[0] is None):
+            return None
+        raster = GDALRaster(bytes(cursor_output[0]))
+        # srid parsed as 4326 by get_clipped_raster, even when ST_SetSRID is
+        # called. It should be CRS_FOR_RASTERS. 
+        raster.srid = settings.CRS_FOR_RASTERS
+        return raster
