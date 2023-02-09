@@ -1,6 +1,6 @@
 import { MapService } from './../../../services/map.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { PlanService } from 'src/app/services';
 import { Plan, ProjectConfig } from 'src/app/types';
@@ -16,6 +16,7 @@ interface ProjectConfigRow extends ProjectConfig {
 })
 export class ScenarioConfigurationsComponent implements OnInit {
   @Input() plan: Plan | null = null;
+  @Output() openConfigEvent = new EventEmitter<number>();
   configurations: ProjectConfigRow[] = [];
   displayedColumns: string[] = [
     'select',
@@ -36,7 +37,7 @@ export class ScenarioConfigurationsComponent implements OnInit {
   }
 
   fetchProjects(): void {
-    this.planService.getProjects(this.plan?.id!).subscribe((result) => {
+    this.planService.getProjectsForPlan(this.plan?.id!).subscribe((result) => {
       this.configurations = result;
     });
   }
@@ -71,5 +72,12 @@ export class ScenarioConfigurationsComponent implements OnInit {
       this.snackbar.open(`Deleted ${deletedIds.length} configuration${deletedIds.length > 1 ? 's' : ''}`);
       this.fetchProjects();
     });
+  }
+
+  openConfig(config?: ProjectConfigRow): void {
+    if (!config) {
+      config = this.configurations.find(item => item.selected);
+    }
+    this.openConfigEvent.emit(config?.id);
   }
 }
