@@ -18,6 +18,10 @@
             "filepath": "boundary/California_County_Boundaries/cnty19_1.shp",
             "source_srs": 3857,
             "geometry_type": "MULTIPOLYGON",
+            "data_provider": "US Census Bureau",
+            "source_link": "https://data.ca.gov/dataset/ca-geographic-boundaries/resource/b0007416-a325-4777-9295-368ea6b710e6",
+            "data_year": "2016",
+            "description": "California county boundaries.",
             "shapefile_field_mapping": {
                 "shape_name": "COUNTY_NAM"
             }
@@ -29,6 +33,10 @@
             "filepath": "boundary/Watersheds_HUC12/ACE_HUC12s_WebMerc_1mXY.shp",
             "source_srs": 4326,
             "geometry_type": "MULTIPOLYGON",
+            "data_provider": "USGS",
+            "source_link": "https://www.arcgis.com/home/item.html?id=2ef0a47b259f467e86061ebc667604f4",
+            "data_year": "2013",
+            "description": "Hydrologic Unit Code (HUC) 12 watershed boundaries for California.",
             "shapefile_field_mapping": {
                 "shape_name": "Name"
             }
@@ -40,6 +48,10 @@
             "filepath": "boundary/watersheds_HUC10_CA/WBD_USGS_HUC10_CA.shp",
             "source_srs": 6414,
             "geometry_type": "MULTIPOLYGON",
+            "data_provider": "USGS",
+            "source_link": "https://www.sciencebase.gov/catalog/item/5696a727e4b039675d00a4ef",
+            "data_year": "2016",
+            "description": "Hydrologic Unit Code (HUC) 10 watershed boundaries for California.",
             "shapefile_field_mapping": {
                 "shape_name": "Name",
                 "acres": "AreaAcres"
@@ -52,6 +64,10 @@
             "filepath": "boundary/California_USFS/California_USFS.shp",
             "source_srs": 4269,
             "geometry_type": "MULTIPOLYGON",
+            "data_provider": "USDA Forest Service",
+            "source_link": "https://catalog.data.gov/dataset/fs-national-forests-dataset-us-forest-service-proclaimed-forests-2c16c",
+            "data_year": "2022",
+            "description": "National Forest System boundaries.",
             "shapefile_field_mapping": {
                 "shape_name": "FORESTNAME"
             }
@@ -63,6 +79,10 @@
             "filepath": "boundary/fire21_2.gdb/a000000af.gdbtable",
             "source_srs": 3310,
             "geometry_type": "MULTIPOLYGON",
+            "data_provider": "CalFire FRAP",
+            "source_link": "https://frap.fire.ca.gov/mapping/gis-data/",
+            "data_year": "2021",
+            "description": "Historical wildfire perimeters.",
             "shapefile_field_mapping": {
                 "shape_name": "FIRE_NAME",
                 "acres": "GIS_ACRES"
@@ -75,6 +95,10 @@
             "filepath": "boundary/fire21_2.gdb/a000000b6.gdbtable",
             "source_srs": 3310,
             "geometry_type": "MULTIPOLYGON",
+            "data_provider": "CalFire FRAP",
+            "source_link": "https://frap.fire.ca.gov/mapping/gis-data/",
+            "data_year": "2021",
+            "description": "Prescribed burn perimeters.",
             "shapefile_field_mapping": {
                 "shape_name": "TREATMENT_NAME",
                 "acres": "TREATED_AC"
