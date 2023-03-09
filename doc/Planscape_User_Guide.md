@@ -16,10 +16,20 @@ Planscape supports three types of users. You can be a guest user or a registered
 
 * *Guest user* - As a guest user, you will have access to the tool in Guest Mode. You can explore and view the tool. The tool does not save your activities.
 * *Registered user* - When you are a registered user, you are either a plan owner or a plan collaborator. You have access to all of the capabilities of the tool. And your work is autosaved every minute.
-
 The autosave option saves the following information:
-* The screen you are in 
-* If you are exploring, 
-    * Map view (1, 2, 4 view)
-    * Map layers on for each map
+    * The screen you are in 
+    * If you are exploring, 
+        * Map view (1, 2, 4 view)
+        * Map layers on for each map
 
+### User Types and Permissions
+|User|Description|Permission|
+|----|----|----|
+|Guest User||View and explore options in the tool.|
+|Plan Owner|The person who creates the plan|    *  View, comment, and edit all editable plan details|
+::: *   Share the plan with others:
+::: *   Make the plan public:
+::: *   Add/remove collaborators:
+|Plan Collaborator|The person that the plan collaborator shares the plan with. There can be more than one plan collaborator to a plan|  *   View, comment plan|
+::: *   Create scenarios. Cannot edit fields like plan name or planning area:
+::: *   Add other collaborators. Cannot remove collaborators:
