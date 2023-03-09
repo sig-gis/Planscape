@@ -1,5 +1,17 @@
 # Planscape User Guide
 
+This topic contains the following sections:
+
+*   [Introduction](#introduction)
+*   [Users](#users)
+    *   [User Types and Permissions](#user-types-and-permissions)
+    *   [Registering as a user](#registering-as-a-user)
+*   [Working with Planescape](#working-with-planescape)
+    *   [Maps](#maps)
+    *   [Plans](#plans)
+    *   [Configurations](#configurations)
+    *   [Scenarios](#scenarios)
+
 ## Introduction
 Planscape is a landscape-scale decision support and collaboration tool that is intended to help land managers prioritize and manage a million acres annually by leveraging the latest data and climate models. Planscape intends to empower regional and forest unit planners such as resource managers, grant managers to prioritize resilience treatments across the landscape and fund the most impactful projects.
 
